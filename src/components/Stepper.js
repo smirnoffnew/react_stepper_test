@@ -5,24 +5,30 @@ import { connect } from 'react-redux';
 class Stepper extends Component {
   
     isStepperComplete = () => {
-       return this.props.step === 4
+       return this.props.step.number === 4
     }
 
 
     render() {
         const {step} = this.props
+        console.log(this.props.step)
+        
 
         return (
             <div>
                 Stepper
-                {this.props.step}
+                {this.props.step.number}
+                {this.props.step.name}
+                
                 <PageTurnWrapper>
                     <PageTurnButton
-                        disabled={step === 1}
+                        disabled={step.number === 1}
                         variant="contained"
                         color={"default"}
-                        onClick={() => { this.props.stepBack();
-                        }}
+                        onClick={() => { this.props.stepForth({
+                            number: step.number - 1,
+                            name: 'subgenres'
+                        }) }}
                     >
 
                         Back
@@ -32,7 +38,10 @@ class Stepper extends Component {
                         variant="contained"
                         color="primary"
                         type="submit"
-                        onClick={() => { this.props.stepForth() }}
+                        onClick={() => { this.props.stepForth({
+                            number: step.number + 1,
+                            name: 'subgenres'
+                        }) }}
                     >
                         Next
                     </PageTurnButton>
@@ -51,9 +60,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         // dispatching plain actions
-        stepForth: () => dispatch({ type: 'STEP_FORTH' }),
-        stepBack: () => dispatch({ type: 'STEP_BACK' }),
-        resetStepper: () => dispatch({ type: 'RESET_STEPPER' })
+        stepForth: (data) => dispatch({ type: 'STEP_FORTH', payload: data }),
+        stepBack: (data) => dispatch({ type: 'STEP_BACK', payload: data  }),
+        resetStepper: (data) => dispatch({ type: 'RESET_STEPPER', payload: data })
     }
 }
 

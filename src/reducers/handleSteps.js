@@ -4,15 +4,19 @@ import {
     RESET_STEPPER
 } from '../actions/types';
 
+const initial = {
+    number: 1,
+    name: 'genres',
+};
 
-export default (state = 1, action) => {
+export default (state = initial, action) => {
     switch (action.type) {
         case STEP_FORTH:
-            return state+1;
+            return action.payload;
         case STEP_BACK:
-            return state-1;
+            return action.payload;
         case RESET_STEPPER:
-            return 1;
+            return initial;
         default:
             return state;
     }
