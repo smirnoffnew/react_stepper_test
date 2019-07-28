@@ -3,57 +3,79 @@ import { PageTurnWrapper, PageTurnButton } from "../styles";
 import { connect } from 'react-redux';
 
 class Stepper extends Component {
-  
+    state={
+        stepper: null,
+    }
+
+    componentDidMount() {
+        this.setState({
+            stepper:  this.props.possibleStepsWithoutNewSubgenre
+        })
+    }
+
     isStepperComplete = () => {
-       return this.props.step.number === 4
+       return this.props.step.number === this.state.stepper.length -1
     }
 
 
     render() {
-        const {step} = this.props
-        console.log(this.props.step)
-        
-
+        const {step, possibleStepsWithNewSubgenre, possibleStepsWithoutNewSubgenre} = this.props
+              console.log(this.state.stepper)
+              console.log(step.number)
         return (
+            this.state.stepper ? 
             <div>
                 Stepper
-                {this.props.step.number}
-                {this.props.step.name}
+                {this.state.stepper[step.number].number}
+                {this.state.stepper[step.number].name}
+
                 
                 <PageTurnWrapper>
                     <PageTurnButton
-                        disabled={step.number === 1}
+                        disabled={step.number === 0}
                         variant="contained"
                         color={"default"}
-                        onClick={() => { this.props.stepForth({
-                            number: step.number - 1,
-                            name: 'subgenres'
-                        }) }}
+                        onClick={() => { this.props.stepBack(this.state.stepper[step.number-1]) }}
                     >
 
                         Back
                     </PageTurnButton>
                     <PageTurnButton
-                        disabled={this.isStepperComplete()}
+                        // disabled={this.isStepperComplete()}
                         variant="contained"
                         color="primary"
                         type="submit"
-                        onClick={() => { this.props.stepForth({
-                            number: step.number + 1,
-                            name: 'subgenres'
-                        }) }}
+                        onClick={() => { debugger; this.props.stepForth(this.state.stepper[step.number+1]) }}
                     >
                         Next
                     </PageTurnButton>
+                    <PageTurnButton
+                        // disabled={this.isStepperComplete()}
+                        variant="contained"
+                        color="primary"
+                        type="submit"
+                        onClick={() => { 
+                            this.setState({stepper: possibleStepsWithNewSubgenre }, ()=>{
+                                this.props.stepForth(this.state.stepper[step.number+1])
+                            })
+                            
+                            }}
+                    >
+                        Change
+                    </PageTurnButton>
                 </PageTurnWrapper>
             </div>
-
+: null
         )
     }
 }
 
 const mapStateToProps = state => {
-    return {step: state.step}
+    return {
+        step: state.step,
+        possibleStepsWithNewSubgenre: state.possibleStepsWithNewSubgenre,
+        possibleStepsWithoutNewSubgenre: state.possibleStepsWithoutNewSubgenre, 
+    }
     
 }
 

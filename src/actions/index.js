@@ -6,6 +6,7 @@ import {
 } from './types';
 
 export const stepForth = (data) => {
+    
     return {
       type: STEP_FORTH,
       payload: data
