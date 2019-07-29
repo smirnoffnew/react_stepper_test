@@ -16,7 +16,7 @@ export default (state = [], action) => {
                 :
                 [...state, action.payload];
         case EDIT_DATA:
-               
+               debugger;
             if (state[action.payload.number]) {
                 let newStateItem = {}
                 newStateItem = { ...state[action.payload.number], ...action.payload }

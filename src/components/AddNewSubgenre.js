@@ -11,16 +11,27 @@ class AddNewSubgenre extends React.Component {
 
   state = {
     name: "",
-    isDescriptionChecked: false,
+    isDescriptionRequired: false,
   };
 
-  handleInputChange = event => { debugger;
-    this.props.editData({ subgenre: event.target.value, ...this.props.stepper[this.props.currentStep.number], number: this.props.currentStep.number })
+  handleInputChange = event => { 
+    this.props.editData({ subgenre: event.target.value, ...this.props.stepper[this.props.currentStep.number] });
+    this.setState({name: event.target.value});
   };
 
   toggleDescriptionCheckbox = (e) => {
-    this.props.editData({ isDescriptionRequired: e.target.checked, ...this.props.stepper[this.props.currentStep] })
+    this.props.editData({ isDescriptionRequired: e.target.checked, ...this.props.stepper[this.props.currentStep.number] });
+    this.setState({isDescriptionRequired: !this.state.isDescriptionRequired });
   };
+
+  componentDidMount = () => {
+    if (this.props.completedSteps[this.props.currentStep.number]) {
+      this.setState({
+        name: this.props.completedSteps[this.props.currentStep.number].subgenre,
+        isDescriptionRequired: this.props.completedSteps[this.props.currentStep.number].isDescriptionRequired
+      })
+    } 
+  }
 
   render() {
     return (
@@ -31,33 +42,31 @@ class AddNewSubgenre extends React.Component {
               variant="outlined"
               type={"text"}
               fullWidth={true}
-              required={true}
+              // required={true}
               onChange={this.handleInputChange}
-            //   value={this.state.name}
+              value={this.state.name}
             />
+
             <div style={{ width: "100%", marginTop: "1rem" }}>
               <FormControlLabel
-                value="end"
-                control={
-                  <Checkbox
-                    // checked={this.state.isDescriptionChecked}
-                    onClick={this.toggleDescriptionCheckbox}
-                    value={this.props.completedSteps[2] ? this.props.completedSteps[2].isDescriptionRequire : false}
-                    color="primary"
-                    inputProps={{
-                      "aria-label": "secondary checkbox",
-                    }}
-                  />
-                }
-                labelPlacement="end"
-                label="Description is required for this subgenre"
-              />
+                  labelPlacement="end"
+                  label="Description is required for this subgenre"
+                  value="end"
+                  control={
+                    <Checkbox
+                      color="primary"
+                      checked={this.state.isDescriptionRequired}
+                      onClick={this.toggleDescriptionCheckbox}
+                      inputProps={{"aria-label": "secondary checkbox",}}
+                    />
+                  }
+                />
             </div>
+
       </Fragment>
     );
   }
 }
-
 
 const mapStateToProps = state => {
     return {
