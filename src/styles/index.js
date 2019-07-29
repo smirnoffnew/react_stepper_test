@@ -24,3 +24,30 @@ export const PageTurnButton = styled(Button)`
   width: 7rem !important;
   position: relative !important;
 `;
+
+export const ButtonListWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-item: flex-start;
+
+  flex-wrap: wrap;
+  box-sizing: content-box;
+`;
+
+export const StyledGenreButton = styled(Button)`
+  width: 9rem !important;
+  text-transform: none !important;
+  margin-bottom: 4% !important;
+  margin-right: 2% !important;
+  margin-left: 2% !important;
+  cursor: pointer !important;
+  padding: 0.5rem 0 0.5rem 0 !important;
+`;
+
+export const StyledForm = styled.form`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+`;

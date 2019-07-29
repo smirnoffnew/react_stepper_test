@@ -2,7 +2,9 @@ import {
     STEP_FORTH,
     STEP_BACK,
     RESET_STEPPER,
-    ADD_COMPLETED_STEP
+    REMOVE_DATA,
+    CHANGE_STEPPER,
+    EDIT_DATA,
 } from './types';
 
 export const stepForth = (data) => {
@@ -29,7 +31,31 @@ export const stepForth = (data) => {
 
   export const addData = (data) => {
     return {
-        type: ADD_COMPLETED_STEP,
+        type: ADD_DATA,
         payload: data
       };
   }
+
+  export const editData = (name) => {
+    return {
+        type: EDIT_DATA,
+        payload: name
+      };
+  }
+
+  export const removeData = (name) => {
+    return {
+        type: REMOVE_DATA,
+        payload: name
+      };
+  }
+
+  export const changeStepper = (data) => {
+  return {
+      type:  CHANGE_STEPPER,
+      payload: data
+    };
+}
+
+
+ 

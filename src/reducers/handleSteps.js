@@ -6,13 +6,12 @@ import {
 
 const initial = {
     number: 0,
-    name: 'genres',
+    name: 'Genre',
 };
 
 export default (state = initial, action) => {
     switch (action.type) {
-        case STEP_FORTH:
-                debugger; 
+        case STEP_FORTH: 
             return action.payload;
         case STEP_BACK:
             return action.payload;
