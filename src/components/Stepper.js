@@ -39,7 +39,7 @@ class Stepper extends Component {
 
     onClickAddNewButton = async () => {
         await this.props.changeStepper(traceStepsWithNewSubgenre);
-        this.props.addData({number: 1, name: 'Subgenre',  subgenre: ''});
+        this.props.editData({number: 1, name: 'Subgenre',  subgenre: ''});
         this.props.stepForth(this.props.stepper[this.props.currentStep.number + 1]);
     }
 
@@ -136,7 +136,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addData: (data) => dispatch({ type: 'ADD_DATA', payload: data }),
+        editData: (data) => dispatch({ type: 'EDIT_DATA', payload: data }),
         stepForth: (data) => dispatch({ type: 'STEP_FORTH', payload: data }),
         stepBack: (data) => dispatch({ type: 'STEP_BACK', payload: data }),
         resetStepper: (data) => dispatch({ type: 'RESET_STEPPER', payload: data }),

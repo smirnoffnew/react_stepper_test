@@ -5,7 +5,6 @@ import {
   REMOVE_DATA,
   CHANGE_STEPPER,
   EDIT_DATA,
-  ADD_DATA,
   REMOVE_ALL_DATA,
 } from './types';
 
@@ -27,13 +26,6 @@ export const stepBack = (data) => {
 export const resetStepper = (data) => {
   return {
     type: RESET_STEPPER,
-    payload: data
-  };
-}
-
-export const addData = (data) => {
-  return {
-    type: ADD_DATA,
     payload: data
   };
 }

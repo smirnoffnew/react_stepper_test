@@ -7,7 +7,7 @@ class Genre extends Component {
 
     getSelectedButton = () => this.props.completedSteps.length > 0 ? this.props.completedSteps[0].genre : null;
 
-    onSelectGenre = (genre) => this.props.addData({ genre: genre.name, ...this.props.stepper[0] });
+    onSelectGenre = (genre) => this.props.editData({ genre: genre.name, ...this.props.stepper[0] });
     
     render() {
         return (
@@ -36,9 +36,7 @@ class Genre extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addData: (data) => {
-            dispatch({ type: 'ADD_DATA', payload: data })
-        }
+        editData: (data) => dispatch({ type: 'EDIT_DATA', payload: data})
     }
 }
 

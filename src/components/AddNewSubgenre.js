@@ -78,9 +78,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        editData: (data) => {
-            dispatch({ type: 'EDIT_DATA', payload: data })
-        }
+        editData: (data) => dispatch({ type: 'EDIT_DATA', payload: data })
     }
 }
 

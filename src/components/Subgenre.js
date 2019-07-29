@@ -10,7 +10,7 @@ class Subgenre extends Component {
     getSelectedButton = () => this.props.completedSteps.length > 1 && this.props.completedSteps[1] ? this.props.completedSteps[1].subgenre : null;
 
     onSelectSubgenre = (subgenre) => {
-        this.props.addData({ subgenre: subgenre.name, ...this.props.stepper[1] })
+        this.props.editData({ subgenre: subgenre.name, ...this.props.stepper[1] })
         this.props.changeStepper(traceSteps);
     }
     
@@ -40,7 +40,7 @@ class Subgenre extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addData: (data) => dispatch({ type: 'ADD_DATA', payload: data }),
+        editData: (data) => dispatch({ type: 'EDIT_DATA', payload: data}),
         changeStepper: (data) => dispatch({ type: 'CHANGE_STEPPER', payload: data }),
     }
 }
