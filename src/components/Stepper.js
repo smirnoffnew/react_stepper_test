@@ -15,11 +15,6 @@ class Stepper extends Component {
     }
 
     isNextButtonDisabled = () => {
-        // if(this.props.step.name === 'Add new subgenre') {
-        //     console.log(this.props.completedSteps[this.props.step.number].subgrene)
-        //     // this.props.completedSteps[this.props.step.number] && console.log(!Boolean(this.props.completedSteps[this.props.step.number].subgrene))
-        //     return this.props.completedSteps[this.props.step.number] ? !Boolean(this.props.completedSteps[this.props.step.number].subgrene) : true 
-        // }
         return this.props.step.number === this.props.stepper.length - 1 || !Boolean(this.props.completedSteps[this.props.step.number])
     }
 
@@ -53,7 +48,6 @@ class Stepper extends Component {
                     variant="contained"
                     color={"default"}
                     onClick={() => {
-                        console.log(step.name)
                         this.props.removeData(step.name)
                         this.props.stepBack(stepper[step.number - 1]);
                         step.name === 'Subgenre' && this.props.changeStepper(possibleStepsWithoutNewSubgenre);
@@ -64,7 +58,7 @@ class Stepper extends Component {
 
 
                 <PageTurnButton
-                    // disabled={this.props.step.name === 'Information' ? false : this.isNextButtonDisabled()}
+                    disabled={this.props.step.name === 'Information' ? false : this.isNextButtonDisabled()}
                     variant="contained"
                     color={this.props.step.name === 'Information' ? 'secondary' : "primary"}
                     type="submit"
