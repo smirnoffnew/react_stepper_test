@@ -1,15 +1,7 @@
-import {
-    CHANGE_STEPPER
-} from '../actions/types';
+import {CHANGE_STEPPER} from '../actions/types';
+import {traceSteps} from '../actions';
 
-const initial = [
-    {number: 0, name: 'Genre'},
-    {number: 1, name: 'Subgenre'},
-    {number: 2, name: 'Information'},
-];
-
-export default (state = initial, action) => {
-    
+export default (state = traceSteps, action) => {
     switch (action.type) {
         case CHANGE_STEPPER:
             return action.payload
@@ -17,5 +9,3 @@ export default (state = initial, action) => {
             return state;
     }
 };
-
-

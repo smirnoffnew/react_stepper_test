@@ -1,32 +1,34 @@
 import React, { Component, Fragment } from 'react';
-import { ButtonListWrapper, StyledGenreButton } from "../styles";
-import data from "../data.json";
 import { connect } from 'react-redux';
+import data from "../data.json";
+import { ButtonListWrapper, StyledGenreButton } from "../styles";
 
 class Genre extends Component {
-    getSelectedButton = () => {
-        return this.props.completedSteps.length > 0 ? this.props.completedSteps[0].genre : null
-    }
 
+    getSelectedButton = () => this.props.completedSteps.length > 0 ? this.props.completedSteps[0].genre : null;
+
+    onSelectGenre = (genre) => this.props.addData({ genre: genre.name, ...this.props.stepper[0] });
+    
     render() {
-
         return (
             <Fragment>
                 <ButtonListWrapper>
-                    {data.genres.map(genre => {
-                        return <StyledGenreButton
-                            key={genre.name}
-                            variant={this.getSelectedButton() === genre.name ? "contained" : "outlined"}
-                            color="primary"
-                            size="large"
-                            onClick={() => { this.props.addData({ genre: genre.name, ...this.props.stepper[0] }) }}
-                        >
-                            {genre.name}
-                        </StyledGenreButton>
-                    })}
+
+                    {
+                        data.genres.map(genre => 
+
+                            <StyledGenreButton
+                                color="primary"
+                                size="large"
+                                key={genre.name}
+                                variant={this.getSelectedButton() === genre.name ? "contained" : "outlined"}
+                                onClick={()=>this.onSelectGenre(genre)}
+                                >{genre.name}
+                            </StyledGenreButton>
+                        )
+                    }
 
                 </ButtonListWrapper>
-
             </Fragment>
         );
     }
@@ -48,5 +50,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Genre);
-
-

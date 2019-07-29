@@ -10,6 +10,7 @@ const initial = {
 };
 
 export default (state = initial, action) => {
+    debugger;
     switch (action.type) {
         case STEP_FORTH: 
             return action.payload;
