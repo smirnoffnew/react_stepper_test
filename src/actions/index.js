@@ -5,6 +5,8 @@ import {
     REMOVE_DATA,
     CHANGE_STEPPER,
     EDIT_DATA,
+    ADD_DATA,
+    REMOVE_ALL_DATA,
 } from './types';
 
 export const stepForth = (data) => {
@@ -47,6 +49,12 @@ export const stepForth = (data) => {
     return {
         type: REMOVE_DATA,
         payload: name
+      };
+  }
+
+  export const removeAllData = () => {
+    return {
+        type: REMOVE_ALL_DATA,
       };
   }
 

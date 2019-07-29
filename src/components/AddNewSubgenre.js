@@ -15,11 +15,14 @@ class AddNewSubgenre extends React.Component {
   };
 
   handleInputChange = event => {
-    this.props.editData({ subgenre: event.target.value, ...this.props.stepper[2] })
+    debugger;
+    var asdf = { subgenre: event.target.value, ...this.props.stepper[this.props.step] };
+    
+    this.props.editData({ subgenre: event.target.value, ...this.props.stepper[this.props.step], number: this.props.step.number })
   };
 
   toggleDescriptionCheckbox = (e) => {
-    this.props.editData({ isDescriptionRequired: e.target.checked, ...this.props.stepper[2] })
+    this.props.editData({ isDescriptionRequired: e.target.checked, ...this.props.stepper[this.props.step] })
   };
 
   render() {
@@ -61,6 +64,7 @@ class AddNewSubgenre extends React.Component {
 
 const mapStateToProps = state => {
     return {
+        step: state.step,
         stepper: state.stepper,
         completedSteps: state.completedSteps,
     }

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Paper, Button } from "@material-ui/core";
-
+import tick from "../images/tick.png";
 
 export const StyledPaper = styled(Paper)`
   height: auto;
@@ -51,3 +51,20 @@ export const StyledForm = styled.form`
   justify-content: flex-start;
   flex-wrap: wrap;
 `;
+
+export const CompletionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CompletionImage = styled.div`
+background-image: url(${tick});
+width: 23rem;
+height: 10rem;
+background-position: center;
+background-size: 38%;
+background-repeat: no-repeat;
+`;
+

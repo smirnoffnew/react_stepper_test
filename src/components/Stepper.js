@@ -5,6 +5,7 @@ import Genre from './Genre';
 import Subgenre from './Subgenre';
 import AddNewSubgenre from './AddNewSubgenre';
 import Information from './Information';
+import Completion from './Completion';
 
 class Stepper extends Component {
 
@@ -13,7 +14,7 @@ class Stepper extends Component {
         this.props.changeStepper(this.props.possibleStepsWithoutNewSubgenre);
     }
 
-    isStepperComplete = () => {
+    isNextButtonDisabled = () => {
         // if(this.props.step.name === 'Add new subgenre') {
         //     console.log(this.props.completedSteps[this.props.step.number].subgrene)
         //     // this.props.completedSteps[this.props.step.number] && console.log(!Boolean(this.props.completedSteps[this.props.step.number].subgrene))
@@ -32,17 +33,21 @@ class Stepper extends Component {
                 return <AddNewSubgenre />
             case 'Information':
                 return <Information />
+            case 'Completion':
+                return <Completion />
         }
     }
 
     submitForm = (e) => {
-    e.preventDefault();
-    console.log('submitted')
+        e.preventDefault();
+        this.props.stepForth(this.props.stepper[this.props.step.number + 1])
     }
+
     renderNavigationButtons = () => {
         const { stepper, step, possibleStepsWithNewSubgenre, possibleStepsWithoutNewSubgenre, completedSteps } = this.props
         return (
             <PageTurnWrapper>
+
                 <PageTurnButton
                     disabled={step.number === 0}
                     variant="contained"
@@ -51,43 +56,45 @@ class Stepper extends Component {
                         console.log(step.name)
                         this.props.removeData(step.name)
                         this.props.stepBack(stepper[step.number - 1]);
-                        step.number === 2 && this.props.changeStepper(possibleStepsWithoutNewSubgenre);
+                        step.name === 'Subgenre' && this.props.changeStepper(possibleStepsWithoutNewSubgenre);
 
                     }}
-                >
-
-                    Back
+                    >Back
                 </PageTurnButton>
+
+
                 <PageTurnButton
-                    disabled={this.isStepperComplete()}
+                    // disabled={this.props.step.name === 'Information' ? false : this.isNextButtonDisabled()}
                     variant="contained"
-                    color="primary"
+                    color={this.props.step.name === 'Information' ? 'secondary' : "primary"}
                     type="submit"
                     onClick={() => {
-                        this.props.stepForth(stepper[step.number + 1]);
+                        { this.props.step.name !== 'Information' && this.props.stepForth(stepper[step.number + 1]); }
                     }}
-                >
-                    Next
-        </PageTurnButton>
+                    >{this.props.step.name === 'Information' ? 'Complete' : 'Next'}
+                </PageTurnButton>
+
+
+
                 {
-                    step.number === 1 
-                    ? 
-                    <PageTurnButton
-                        variant="contained"
-                        color="secondary"
-                        type="submit"
-                        disabled={completedSteps.length === 2}
-                        onClick={() => {
-                            (async () => {
-                                await this.props.changeStepper(possibleStepsWithNewSubgenre);
-                                this.props.stepForth(this.props.stepper[step.number + 1]);
-                            })()
-                        }}
-                    >
-                        Add new
-                    </PageTurnButton> 
-                    : 
-                    null
+                    step.number === 1
+                        ?
+                        <PageTurnButton
+                            variant="contained"
+                            color="secondary"
+                            type="submit"
+                            disabled={completedSteps.length === 2}
+                            onClick={() => {
+                                (async () => {
+                                    await this.props.changeStepper(possibleStepsWithNewSubgenre);
+                                    this.props.stepForth(this.props.stepper[step.number + 1]);
+                                })()
+                            }}
+                        >
+                            Add new
+                    </PageTurnButton>
+                        :
+                        null
                 }
             </PageTurnWrapper>
         )
@@ -98,17 +105,26 @@ class Stepper extends Component {
         return (
             this.props.stepper.length > 0 ?
                 <div>
-                    {step.name === "Information" ?
+                    <div>{step.name}</div>
+                    <div>{step.number}</div>
+                    {
+                        step.name === "Information" &&
                         <StyledForm onSubmit={this.submitForm}>
                             {this.renderPage(step.name)}
                             {this.renderNavigationButtons()}
                         </StyledForm>
-                        :
+                    }
+                    {
+                        step.name === "Completion" &&
+                        this.renderPage(step.name)
+                    }
+                    {   
+                        step.name !== "Information" && step.name !== "Completion" &&
                         <Fragment>
                             {this.renderPage(step.name)}
                             {this.renderNavigationButtons()}
                         </Fragment>
-                    }
+                    }     
                 </div>
                 : 'null'
         )
@@ -122,9 +138,7 @@ const mapStateToProps = state => {
         possibleStepsWithNewSubgenre: state.possibleStepsWithNewSubgenre,
         possibleStepsWithoutNewSubgenre: state.possibleStepsWithoutNewSubgenre,
         stepper: state.stepper
-
     }
-
 }
 
 const mapDispatchToProps = dispatch => {

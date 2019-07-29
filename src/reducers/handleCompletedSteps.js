@@ -3,8 +3,8 @@ import {
     ADD_DATA,
     EDIT_DATA,
     REMOVE_DATA,
+    REMOVE_ALL_DATA,
 } from '../actions/types';
-
 
 export default (state = [], action) => {
     switch (action.type) {
@@ -16,6 +16,7 @@ export default (state = [], action) => {
                 :
                 [...state, action.payload];
         case EDIT_DATA:
+               
             if (state[action.payload.number]) {
                 let newStateItem = {}
                 newStateItem = { ...state[action.payload.number], ...action.payload }
@@ -28,11 +29,10 @@ export default (state = [], action) => {
                     ?
                     [...state]
                     :
+                    
                     [...state, action.payload];
             }
         case REMOVE_DATA:
-  
-            console.log('state', state)
             let newState = state
             const index = state.findIndex(step => {
                 
@@ -43,7 +43,8 @@ export default (state = [], action) => {
                 return newState
             }
             else { return state }
-
+        case REMOVE_ALL_DATA: 
+            return [];
         default:
             return state;
     }

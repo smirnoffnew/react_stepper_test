@@ -4,8 +4,6 @@ import data from "../data.json";
 import { connect } from 'react-redux';
 
 class Subgenre extends Component {
-    state = { data: null, clickedButton: null, section: null };
-
     getSelectedButton = () => {
         return this.props.completedSteps.length > 1 && this.props.completedSteps[1] ? this.props.completedSteps[1].subgenre : null
     }
