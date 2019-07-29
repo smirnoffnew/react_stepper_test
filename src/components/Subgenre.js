@@ -1,43 +1,47 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { ButtonListWrapper, StyledGenreButton } from "../styles";
 import data from "../data.json";
-import { connect } from 'react-redux';
+import {traceSteps} from '../actions';
+
 
 class Subgenre extends Component {
-    getSelectedButton = () => {
-        return this.props.completedSteps.length > 1 && this.props.completedSteps[1] ? this.props.completedSteps[1].subgenre : null
-    }
 
+    getSelectedButton = () => this.props.completedSteps.length > 1 && this.props.completedSteps[1] ? this.props.completedSteps[1].subgenre : null;
+
+    onSelectSubgenre = (subgenre) => {
+        this.props.addData({ subgenre: subgenre.name, ...this.props.stepper[1] })
+        this.props.changeStepper(traceSteps);
+    }
+    
     render() {
-        const genre = data.genres.find(
-            genre => genre.name === this.props.completedSteps[0].genre
-          );
+
         return (
-            <Fragment>
-                <ButtonListWrapper>
-                    {   
-                        genre.subgenres.map(subgenre => {
-                        return <StyledGenreButton
-                            key={subgenre.name}
-                            variant={this.getSelectedButton() === subgenre.name ? "contained" : "outlined"}
+            <ButtonListWrapper>
+                {   
+                    data
+                    .genres.find(genre => genre.name === this.props.completedSteps[0].genre)
+                    .subgenres.map(subgenre => 
+
+                        <StyledGenreButton
                             color="primary"
                             size="large"
-                            onClick={() => { this.props.addData({ subgenre: subgenre.name, ...this.props.stepper[1] }) }}
-                        >
-                            {subgenre.name}
+                            key={subgenre.name}
+                            variant={this.getSelectedButton() === subgenre.name ? "contained" : "outlined"}
+                            onClick={() => this.onSelectSubgenre(subgenre) }
+                            >{subgenre.name}
                         </StyledGenreButton>
-                    })}
-                </ButtonListWrapper>
-            </Fragment>
+
+                    )}
+            </ButtonListWrapper>
         );
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        addData: (data) => {
-            dispatch({ type: 'ADD_DATA', payload: data })
-        }
+        addData: (data) => dispatch({ type: 'ADD_DATA', payload: data }),
+        changeStepper: (data) => dispatch({ type: 'CHANGE_STEPPER', payload: data }),
     }
 }
 
@@ -49,5 +53,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Subgenre);
-
-

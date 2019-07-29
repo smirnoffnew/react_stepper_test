@@ -29,20 +29,25 @@ class Stepper extends Component {
         }
     }
 
-    onClickBackButton(){
+    onClickBackButton = () => {
         this.props.removeData(this.props.currentStep.name)
         this.props.stepBack(this.props.stepper[this.props.currentStep.number - 1]);
         this.props.currentStep.name === 'Subgenre' && this.props.changeStepper(traceSteps);
     }
 
-    onClickNextButton(){
+    onClickNextButton = () => this.props.stepForth(this.props.stepper[this.props.currentStep.number + 1]);
+
+    onClickAddNewButton = async () => {
+        await this.props.changeStepper(traceStepsWithNewSubgenre);
+        this.props.addData({number: 1, name: 'Subgenre',  subgenre: ''});
         this.props.stepForth(this.props.stepper[this.props.currentStep.number + 1]);
     }
 
-    async onClickAddNewButton(){
-        await this.props.changeStepper(traceStepsWithNewSubgenre);
-        this.props.stepForth(this.props.stepper[this.props.currentStep.number + 1]);
+    isAddNewButtonDisabled = () => {
+        return  this.props.completedSteps[this.props.currentStep] && this.props.completedSteps[this.props.currentStep].subgenre;
     }
+
+    isInformationComponent = () => this.props.currentStep.name === 'Information';
 
     renderNavigationButtons = () => {
         const { currentStep, completedSteps } = this.props
@@ -53,17 +58,17 @@ class Stepper extends Component {
                     disabled={this.props.currentStep.number === 0}
                     variant="contained"
                     color={"default"}
-                    onClick={() => this.onClickBackButton}
+                    onClick={this.onClickBackButton}
                     >Back
                 </PageTurnButton>
 
                 <PageTurnButton
-                    disabled={this.props.currentStep.name === 'Information' ? false : this.isNextButtonDisabled()}
+                    disabled={this.isInformationComponent() ? false : this.isNextButtonDisabled()}
                     variant="contained"
-                    color={this.props.currentStep.name === 'Information' ? 'secondary' : "primary"}
+                    color={this.isInformationComponent() ? 'secondary' : 'primary'}
                     type="submit"
-                    onClick={() => this.onClickNextButton}
-                    >{this.props.currentStep.name === 'Information' ? 'Complete' : 'Next'}
+                    onClick={this.onClickNextButton}
+                    >{this.isInformationComponent() ? 'Complete' : 'Next'}
                 </PageTurnButton>
 
                 {
@@ -73,8 +78,8 @@ class Stepper extends Component {
                         variant="contained"
                         color="secondary"
                         type="submit"
-                        disabled={completedSteps.length === 2}
-                        onClick={() => this.onClickAddNewButton}
+                        disabled={this.isAddNewButtonDisabled()}
+                        onClick={this.onClickAddNewButton}
                         >Add new
                     </PageTurnButton>
                     :
@@ -131,6 +136,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        addData: (data) => dispatch({ type: 'ADD_DATA', payload: data }),
         stepForth: (data) => dispatch({ type: 'STEP_FORTH', payload: data }),
         stepBack: (data) => dispatch({ type: 'STEP_BACK', payload: data }),
         resetStepper: (data) => dispatch({ type: 'RESET_STEPPER', payload: data }),

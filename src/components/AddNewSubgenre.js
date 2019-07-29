@@ -7,22 +7,19 @@ import {
 } from "@material-ui/core";
 
 
-
 class AddNewSubgenre extends React.Component {
+
   state = {
     name: "",
     isDescriptionChecked: false,
   };
 
-  handleInputChange = event => {
-    debugger;
-    var asdf = { subgenre: event.target.value, ...this.props.stepper[this.props.step] };
-    
-    this.props.editData({ subgenre: event.target.value, ...this.props.stepper[this.props.step], number: this.props.step.number })
+  handleInputChange = event => { debugger;
+    this.props.editData({ subgenre: event.target.value, ...this.props.stepper[this.props.currentStep.number], number: this.props.currentStep.number })
   };
 
   toggleDescriptionCheckbox = (e) => {
-    this.props.editData({ isDescriptionRequired: e.target.checked, ...this.props.stepper[this.props.step] })
+    this.props.editData({ isDescriptionRequired: e.target.checked, ...this.props.stepper[this.props.currentStep] })
   };
 
   render() {
@@ -64,7 +61,7 @@ class AddNewSubgenre extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        step: state.step,
+        currentStep: state.currentStep,
         stepper: state.stepper,
         completedSteps: state.completedSteps,
     }
