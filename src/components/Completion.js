@@ -2,11 +2,13 @@ import React from "react";
 import { connect } from "react-redux";
 import { Typography, Button, Table, TableBody, TableCell, TableRow } from "@material-ui/core";
 import { CompletionContainer, CompletionImage } from "../styles";
+import {traceSteps} from "../constants";
 
 class Completion extends React.Component {
 
     addAnotherBook = () => {
         this.props.resetStepper();
+        this.props.changeStepper(traceSteps);
         this.props.removeData();
     };
 
@@ -67,6 +69,7 @@ const mapDispatchToProps = dispatch => {
     return {
         resetStepper: (data) => dispatch({ type: 'RESET_STEPPER', payload: data }),
         removeData: () => dispatch({ type: 'REMOVE_ALL_DATA' }),
+        changeStepper: (data) => dispatch({ type: 'CHANGE_STEPPER', payload: data })
     }
 }
 
