@@ -18,6 +18,7 @@ const classes = {
     marginRight: "1rem",
   },
 };
+
 class Steps extends React.Component {
   state = {
     activeStep: 0,
@@ -36,34 +37,38 @@ class Steps extends React.Component {
     );
 
     return (
-      <div style={{marginBottom: '2rem'}}>
-        <Stepper
-          alternativeLabel
-          connector={connector}
-        >
-          {stepper.map((step, index) => {
-            return (
-                stepper.length - 1 !== index  
-                ?
-              <Step
-                key={step.name}
-                active={step.number === currentStep.number}
-                disabled={step.number > currentStep.number}
-                completed={step.number < currentStep.number}
-              >
-                <StepLabel
-                  StepIconProps={{
-                    classes: { root: classes.icon },
-                  }}
+      currentStep.number < stepper.length - 1
+      ? 
+        <div style={{marginBottom: '2rem'}}>
+          <Stepper
+            alternativeLabel
+            connector={connector}
+          >
+            {stepper.map((step, index) => {
+              return (
+                  stepper.length - 1 !== index  
+                  ?
+                <Step
+                  key={step.name}
+                  active={step.number === currentStep.number}
+                  disabled={step.number > currentStep.number}
+                  completed={step.number < currentStep.number}
                 >
-                  <Typography variant="body2">{step.name}</Typography>
-                </StepLabel>
-              </Step>
-              : null
-            );
-          })}
-        </Stepper>
-      </div>
+                  <StepLabel
+                    StepIconProps={{
+                      classes: { root: classes.icon },
+                    }}
+                  >
+                    <Typography variant="body2">{step.name}</Typography>
+                  </StepLabel>
+                </Step>
+                : null
+              );
+            })}
+          </Stepper>
+        </div>
+      :
+      null
     );
   }
 }
@@ -75,3 +80,4 @@ const mapStateToProps = state => {
   };
 };
 export default connect(mapStateToProps)(withStyles(classes)(Steps));
+

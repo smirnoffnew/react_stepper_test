@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { PageTurnWrapper, PageTurnButton } from "../styles";
 import { connect } from 'react-redux';
+import {traceSteps, traceStepsWithNewSubgenre} from '../constants';
 import Genre from './Genre';
 import Subgenre from './Subgenre';
 import AddNewSubgenre from './AddNewSubgenre';
 import Information from './Information';
 import Completion from './Completion';
 import Steps from './Steps';
-import {traceSteps, traceStepsWithNewSubgenre} from '../constants';
+import UpperLine from './UpperLine';
+
 
 class Stepper extends Component {
 
@@ -71,8 +73,6 @@ class Stepper extends Component {
         return  this.props.completedSteps[this.props.currentStep] && this.props.completedSteps[this.props.currentStep].subgenre;
     }
 
-    isInformationComponent = () => this.props.currentStep.name === 'Information';
-
     renderNavigationButtons = () => {
         const { currentStep } = this.props
         return (
@@ -87,7 +87,7 @@ class Stepper extends Component {
                 </PageTurnButton>
 
                 {
-                    this.isInformationComponent()
+                    this.props.currentStep.number === this.props.stepper.length -2
                         ?
                         <PageTurnButton
                             disabled={this.isCompleteButtonDisabled()}
@@ -132,9 +132,10 @@ class Stepper extends Component {
             this.props.stepper.length > 0 
             ?
                 <div>
+                    <UpperLine />
                     <Steps />
                     {this.renderPage(this.props.currentStep.name)}
-                    { this.props.currentStep.name !== "Completion" && this.renderNavigationButtons()}
+                    { this.props.currentStep.number < this.props.stepper.length -1 && this.renderNavigationButtons()}
                 </div>
             : 
                 null
