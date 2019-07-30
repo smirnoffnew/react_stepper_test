@@ -1,10 +1,10 @@
 import {
   STEP_FORTH,
   STEP_BACK,
-  RESET_STEPPER,
-  REMOVE_DATA,
   CHANGE_STEPPER,
+  RESET_STEPPER,
   EDIT_DATA,
+  REMOVE_DATA,
   REMOVE_ALL_DATA,
 } from './types';
 
@@ -22,6 +22,13 @@ export const stepBack = (data) => {
     payload: data
   };
 };
+
+export const changeStepper = (data) => {
+  return {
+    type: CHANGE_STEPPER,
+    payload: data
+  };
+}
 
 export const resetStepper = (data) => {
   return {
@@ -50,9 +57,3 @@ export const removeAllData = () => {
   };
 }
 
-export const changeStepper = (data) => {
-  return {
-    type: CHANGE_STEPPER,
-    payload: data
-  };
-}

@@ -2,6 +2,17 @@ import styled from "styled-components";
 import { Paper, Button } from "@material-ui/core";
 import tick from "../images/tick.png";
 
+export const StartWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+// export const StartButton = styled(Button)`
+//   text-decoration: none !important;
+// `;
+
 export const StyledPaper = styled(Paper)`
   height: auto;
   margin-top: 2rem;

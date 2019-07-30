@@ -33,8 +33,7 @@ const theme = createMuiTheme({
 });
 
 
-class App extends React.Component {
-  render(){
+function App() {
     return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <MuiThemeProvider theme={theme}>
@@ -42,21 +41,12 @@ class App extends React.Component {
           <Container maxWidth="md">
             <StyledPaper component="div" elevation={2}>
             <Route exact path="/" component={Start} />
-            <Route  path={`/step/:id`} component={Stepper} />
+            <Route  path={`/stepper`} component={Stepper} />
             </StyledPaper>
           </Container>
         </MuiThemeProvider>
       </BrowserRouter>
   );
-  }
 }
 
-const mapStateToProps = state => {
-  return {
-      currentStep: state.currentStep,
-  }
-}
-
-export default connect(mapStateToProps)(App);
-
-///step/:id
+export default App;

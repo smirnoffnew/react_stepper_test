@@ -1,20 +1,33 @@
 import React, { Component } from 'react';
-import { Button } from "@material-ui/core"
+import { Button, Typography } from "@material-ui/core"
 import { Link } from "react-router-dom";
+import { StartWrapper } from '../styles';
 
 class Start extends Component {
 
     render() {
         return (
-            <div>
-                <Link to="/step/1">
-                <Button color='primary' onClick={()=>{
-
-                }}>
-                    Start
+            <StartWrapper>
+                <Typography
+                    gutterBottom={true}
+                    color='primary'
+                    paragraph  
+                    variant='h4'
+                >
+                    Add New Book
+                </Typography>
+                <Link to="/stepper" style={{ textDecoration: 'none' }}>
+                <Button 
+                    variant='contained'
+                    color='secondary'
+                    size='large'  
+                >
+                    <Typography>
+                        Start
+                    </Typography>
                 </Button>
                 </Link>
-            </div>
+            </StartWrapper>
         );
     }
 }
