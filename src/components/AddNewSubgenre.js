@@ -42,7 +42,6 @@ class AddNewSubgenre extends React.Component {
               variant="outlined"
               type={"text"}
               fullWidth={true}
-              // required={true}
               onChange={this.handleInputChange}
               value={this.state.name}
             />

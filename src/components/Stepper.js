@@ -11,7 +11,29 @@ import {traceSteps, traceStepsWithNewSubgenre} from '../actions';
 class Stepper extends Component {
 
     isNextButtonDisabled = () => {
-        return this.props.currentStep.number === this.props.stepper.length - 1 || !Boolean(this.props.completedSteps[this.props.currentStep.number])
+        if (this.props.currentStep.name === 'Add new subgenre') {
+            return this.props.completedSteps[this.props.currentStep.number] && 
+            this.props.completedSteps[this.props.currentStep.number].subgenre ? false : true
+        }
+        return this.props.currentStep.number === this.props.stepper.length - 1 ||
+            !Boolean(this.props.completedSteps[this.props.currentStep.number])
+    }
+
+    isCompleteButtonDisabled = () => {
+        console.log('trigger')
+        return (
+            this.props.completedSteps[this.props.currentStep.number] && 
+            this.props.completedSteps[this.props.currentStep.number]['Book title'] && 
+            this.props.completedSteps[this.props.currentStep.number]['Author'] && 
+            this.props.completedSteps[this.props.currentStep.number]['ISBN'] && 
+            this.props.completedSteps[this.props.currentStep.number]['Publisher'] && 
+            this.props.completedSteps[this.props.currentStep.number]['Date published'] && 
+            this.props.completedSteps[this.props.currentStep.number]['Number of pages'] && 
+            this.props.completedSteps[this.props.currentStep.number]['Format'] && 
+            this.props.completedSteps[this.props.currentStep.number]['Edition'] && 
+            this.props.completedSteps[this.props.currentStep.number]['Edition language'] 
+             ? false : true
+        )
     }
 
     renderPage = (name) => {
@@ -50,7 +72,7 @@ class Stepper extends Component {
     isInformationComponent = () => this.props.currentStep.name === 'Information';
 
     renderNavigationButtons = () => {
-        const { currentStep, completedSteps } = this.props
+        const { currentStep } = this.props
         return (
             <PageTurnWrapper>
 
@@ -62,14 +84,26 @@ class Stepper extends Component {
                     >Back
                 </PageTurnButton>
 
-                <PageTurnButton
-                    disabled={this.isInformationComponent() ? false : this.isNextButtonDisabled()}
-                    variant="contained"
-                    color={this.isInformationComponent() ? 'secondary' : 'primary'}
-                    type="submit"
-                    onClick={this.onClickNextButton}
-                    >{this.isInformationComponent() ? 'Complete' : 'Next'}
-                </PageTurnButton>
+                {
+                    this.isInformationComponent()
+                        ?
+                        <PageTurnButton
+                            disabled={this.isCompleteButtonDisabled()}
+                            variant="contained"
+                            color='secondary'
+                            onClick={this.onClickNextButton}
+                        > Complete
+                        </PageTurnButton>
+                        :
+                        <PageTurnButton
+                            disabled={this.isNextButtonDisabled()}
+                            variant="contained"
+                            color='primary'
+                            onClick={this.onClickNextButton}
+                        >Next
+                        </PageTurnButton>
+                }
+   
 
                 {
                     currentStep.number === 1
@@ -77,7 +111,6 @@ class Stepper extends Component {
                     <PageTurnButton
                         variant="contained"
                         color="secondary"
-                        type="submit"
                         disabled={this.isAddNewButtonDisabled()}
                         onClick={this.onClickAddNewButton}
                         >Add new
@@ -86,42 +119,22 @@ class Stepper extends Component {
                     null
                 }
 
+
+
             </PageTurnWrapper>
         )
     }
 
     render() {
-       
-        const { stepper, currentStep, completedSteps } = this.props
-        console.log(currentStep)
         return (
-            this.props.stepper.length > 0 ?
+            this.props.stepper.length > 0 
+            ?
                 <div>
-                    <div>{stepper.name}</div>
-                    <div>{stepper.number}</div>
-                    <div>{stepper.map(i => {
-                        return <span> {i.number}-{i.name} //</span>
-                        })}</div>
-                    {
-                        currentStep.name === "Information" &&
-                        <StyledForm onSubmit={this.submitForm}>
-                            {this.renderPage(currentStep.name)}
-                            {this.renderNavigationButtons()}
-                        </StyledForm>
-                    }
-                    {
-                        currentStep.name === "Completion" &&
-                        this.renderPage(currentStep.name)
-                    }
-                    {   
-                        currentStep.name !== "Information" && currentStep.name !== "Completion" &&
-                        <Fragment>
-                            {this.renderPage(currentStep.name)}
-                            {this.renderNavigationButtons()}
-                        </Fragment>
-                    }     
+                    {this.renderPage(this.props.currentStep.name)}
+                    { this.props.currentStep.name !== "Completion" && this.renderNavigationButtons()}
                 </div>
-                : 'null'
+            : 
+                null
         )
     }
 }

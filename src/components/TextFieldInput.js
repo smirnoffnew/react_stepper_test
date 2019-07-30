@@ -38,10 +38,7 @@ export default function OutlinedTextFields({ field, handleChange }) {
   return (
     <div
       key={name}
-      style={{
-        width:
-          name === "Edition" || name === "Edition language" ? "auto" : "100%",
-      }}
+      style={{ width: name === "Edition" || name === "Edition language" ? "auto" : "100%" }}
     >
       <TextField
         required

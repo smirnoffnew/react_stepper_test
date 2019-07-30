@@ -18,7 +18,7 @@ class Information extends React.Component {
 
   ifDescriptionOmitted = (field) => {
     return field.name === "Description" &&
-      (this.props.completedSteps[2] || !Boolean(this.props.completedSteps[2].isDescriptionRequired))
+      (this.props.completedSteps.length === 2 || !Boolean(this.props.completedSteps[2].isDescriptionRequired))
   }
 
   render() {
