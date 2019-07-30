@@ -1,23 +1,18 @@
-import {
-    STEP_FORTH,
-    STEP_BACK,
-    RESET_STEPPER
-} from '../actions/types';
+import { STEP_FORTH, STEP_BACK, RESET_STEPPER } from '../actions/types';
+import { initialCurrentStep } from '../actions';
 
-const initial = {
-    number: 0,
-    name: 'Genre',
-};
-
-export default (state = initial, action) => {
-    debugger;
+export default (state = initialCurrentStep, action) => {
     switch (action.type) {
-        case STEP_FORTH: 
+
+        case STEP_FORTH:
             return action.payload;
+
         case STEP_BACK:
             return action.payload;
+
         case RESET_STEPPER:
-            return initial;
+            return initialCurrentStep;
+
         default:
             return state;
     }
