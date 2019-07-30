@@ -4,30 +4,31 @@ import { Typography, Button, Table, TableBody, TableCell, TableRow } from "@mate
 import { CompletionContainer, CompletionImage } from "../styles";
 
 class Completion extends React.Component {
-    //   state = {
-    //     returnBack: false,
-    //   };
-
-    componentDidMount() {
-
-console.log(Object.entries(this.props.completedSteps[2]))
-        // Object.entries(this.props.completedSteps[2]).filter.map(property => {
-        //     console.log(property[0])
-        //     console.log(property[1])
-        // })
-    }
 
     addAnotherBook = () => {
         this.props.resetStepper();
         this.props.removeData();
-
     };
 
-    isRowGrey = (index) => {
-       return {backgroundColor: index%2>0 ?  'transparent' : '#e3e3e3'};
+    isRowGrey = (index) => ({ backgroundColor: index % 2 > 0 ? 'transparent' : '#e3e3e3' });
+    
+    getFormatedData = () => {
+        const res = {};
+        this.props.completedSteps.forEach(element => Object.assign(res, element));
+
+        delete res.number;
+        delete res.name;
+        delete res.isDescriptionRequired;
+
+        if (!res.subgenre)
+            delete res.subgenre;
+        
+        return res;
     }
 
+
     render() {
+        const data = this.getFormatedData();
         return (
             <CompletionContainer>
                 <CompletionImage />
@@ -38,37 +39,18 @@ console.log(Object.entries(this.props.completedSteps[2]))
                     onClick={() => { this.addAnotherBook(); }}
                     variant="contained"
                     style={{ marginTop: "2rem" }}
-                >
-                    Add another book
-        </Button>
+                    >Add another book
+                 </Button>
+
                 <Table style={{ width: "100%", marginTop: '5rem' }}>
                     <TableBody>
                         {
-                            this.props.completedSteps.map((data, index) => {
-                                if(data){
-                                    if (data.name === 'Information') {                               
-                                        return (
-                                            Object.keys(data).filter(item => (item !== 'name') &&  (item !== 'number')).map((key, index) => {
-                                                return (
-                                                    <TableRow key={Math.random()}>
-                                                        <TableCell style={this.isRowGrey(index)}>{key}</TableCell>
-                                                        <TableCell style={this.isRowGrey(index)}>{data[key]}</TableCell>
-                                                    </TableRow>
-                                                )
-                                            })
-                                            
-                                        )
-                                    } 
-                                        return (
-                                            <TableRow key={Math.random()}>
-                                                <TableCell style={this.isRowGrey(index)}>{data.name}</TableCell>
-                                                <TableCell style={this.isRowGrey(index)}>{data[data.name.toLowerCase()]}</TableCell>
-                                            </TableRow>
-                                        )
-                                }
-                               
-                                
-                            })
+                            Object.keys(data).map((key, index) => 
+                                <TableRow key={Math.random()}>
+                                    <TableCell style={this.isRowGrey(index)}>{key}</TableCell>
+                                    <TableCell style={this.isRowGrey(index)}>{data[key]}</TableCell>
+                                </TableRow>
+                            )
                         }
                     </TableBody>
                 </Table>
