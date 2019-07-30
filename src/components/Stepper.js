@@ -1,5 +1,5 @@
-import React, { Component, Fragment } from 'react';
-import { PageTurnWrapper, PageTurnButton, StyledForm } from "../styles";
+import React, { Component } from 'react';
+import { PageTurnWrapper, PageTurnButton } from "../styles";
 import { connect } from 'react-redux';
 import Genre from './Genre';
 import Subgenre from './Subgenre';
@@ -7,8 +7,7 @@ import AddNewSubgenre from './AddNewSubgenre';
 import Information from './Information';
 import Completion from './Completion';
 import Steps from './Steps';
-
-import {traceSteps, traceStepsWithNewSubgenre} from '../actions';
+import {traceSteps, traceStepsWithNewSubgenre} from '../constants';
 
 class Stepper extends Component {
 
@@ -22,7 +21,6 @@ class Stepper extends Component {
     }
 
     isCompleteButtonDisabled = () => {
-        console.log('trigger')
         return (
             this.props.completedSteps[this.props.currentStep.number] && 
             this.props.completedSteps[this.props.currentStep.number]['Book title'] && 
@@ -50,6 +48,8 @@ class Stepper extends Component {
                 return <Information />
             case 'Completion':
                 return <Completion />
+            default: 
+                return null;
         }
     }
 
@@ -76,7 +76,7 @@ class Stepper extends Component {
     renderNavigationButtons = () => {
         const { currentStep } = this.props
         return (
-            <PageTurnWrapper>
+            <PageTurnWrapper adjustWidth={currentStep.name === 'Genre' || currentStep.name === 'Subgenre'}>
 
                 <PageTurnButton
                     disabled={this.props.currentStep.number === 0}

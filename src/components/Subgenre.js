@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ButtonListWrapper, StyledGenreButton } from "../styles";
-import data from "../data.json";
-import {traceSteps} from '../actions';
+import data from "../constants/data.json";
+import {traceSteps} from '../constants';
 
 
 class Subgenre extends Component {

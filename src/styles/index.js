@@ -10,7 +10,7 @@ export const StyledPaper = styled(Paper)`
 `;
 
 export const PageTurnWrapper = styled.div`
-  width: 100%;
+  width: ${({adjustWidth}) => adjustWidth ? '94.5%' : '100%'};
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
@@ -29,7 +29,6 @@ export const ButtonListWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-item: flex-start;
-
   flex-wrap: wrap;
   box-sizing: content-box;
 `;

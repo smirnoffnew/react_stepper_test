@@ -1,4 +1,4 @@
-import { informationFields } from '../actions';
+import { informationFields } from '../constants';
 
 export default (state = informationFields) => {
   return state;

@@ -1,5 +1,5 @@
 import { STEP_FORTH, STEP_BACK, RESET_STEPPER } from '../actions/types';
-import { initialCurrentStep } from '../actions';
+import { initialCurrentStep } from '../constants';
 
 export default (state = initialCurrentStep, action) => {
     switch (action.type) {

@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import data from "../data.json";
+import data from "../constants/data.json";
 import { ButtonListWrapper, StyledGenreButton } from "../styles";
 
 class Genre extends Component {
