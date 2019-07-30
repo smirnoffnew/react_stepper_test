@@ -1,14 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
   MuiThemeProvider,
   CssBaseline,
   createMuiTheme,
   Container,
 } from "@material-ui/core";
-import { Provider } from "react-redux";
-import store from "./store";
 import { BrowserRouter, Route } from "react-router-dom";
-import { deepPurple, indigo, grey } from "@material-ui/core/colors";
+import { pink, indigo, grey } from "@material-ui/core/colors";
 import { StyledPaper } from "./styles";
 import Start from './components/Start';
 import Stepper from './components/Stepper';
@@ -19,7 +18,7 @@ const theme = createMuiTheme({
       main: indigo[500],
     },
     secondary: {
-      main: deepPurple[500],
+      main: pink[600],
     },
     background: {
       paper: "#fff",
@@ -34,23 +33,30 @@ const theme = createMuiTheme({
 });
 
 
-function App() {
-  return (
-    <Provider store={store}>
+class App extends React.Component {
+  render(){
+    return (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
           <Container maxWidth="md">
             <StyledPaper component="div" elevation={2}>
             <Route exact path="/" component={Start} />
-            <Route  path='/step/:id' component={Stepper} />
+            <Route  path={`/step/:id`} component={Stepper} />
             </StyledPaper>
           </Container>
         </MuiThemeProvider>
       </BrowserRouter>
-    </Provider> 
-
   );
+  }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+      currentStep: state.currentStep,
+  }
+}
+
+export default connect(mapStateToProps)(App);
+
+///step/:id

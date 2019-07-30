@@ -21,9 +21,7 @@ export default function OutlinedTextFields({ field, handleChange }) {
   const renderOptions = () => {
     let optionItems = [];
     optionItems.push(
-      <option key="none" value="">
-        {name}
-      </option>
+      <option key="none" value="" />
     );
     options[name].map(option =>
       optionItems.push(
@@ -41,10 +39,8 @@ export default function OutlinedTextFields({ field, handleChange }) {
       style={{ width: name === "Edition" || name === "Edition language" ? "auto" : "100%" }}
     >
       <TextField
-        required
         select={type !== "select" ? false : true}
         className={classes.textField}
-        placeholder={name}
         margin="dense"
         variant="outlined"
         label={name}

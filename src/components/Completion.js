@@ -46,7 +46,7 @@ class Completion extends React.Component {
                         {
                             Object.keys(data).map((key, index) => 
                                 <TableRow key={Math.random()}>
-                                    <TableCell style={this.isRowGrey(index)}>{key}</TableCell>
+                                    <TableCell style={this.isRowGrey(index)}>{key.charAt(0).toUpperCase() + key.slice(1)}</TableCell>
                                     <TableCell style={this.isRowGrey(index)}>{data[key]}</TableCell>
                                 </TableRow>
                             )

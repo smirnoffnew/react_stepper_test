@@ -54,7 +54,7 @@ class AddNewSubgenre extends React.Component {
                   control={
                     <Checkbox
                       color="primary"
-                      checked={this.state.isDescriptionRequired}
+                      checked={Boolean(this.state.isDescriptionRequired)}
                       onClick={this.toggleDescriptionCheckbox}
                       inputProps={{"aria-label": "secondary checkbox",}}
                     />
