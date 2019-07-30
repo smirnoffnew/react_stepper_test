@@ -26,7 +26,6 @@ class Completion extends React.Component {
         return res;
     }
 
-
     render() {
         const data = this.getFormatedData();
         return (

@@ -6,6 +6,8 @@ import Subgenre from './Subgenre';
 import AddNewSubgenre from './AddNewSubgenre';
 import Information from './Information';
 import Completion from './Completion';
+import Steps from './Steps';
+
 import {traceSteps, traceStepsWithNewSubgenre} from '../actions';
 
 class Stepper extends Component {
@@ -130,6 +132,7 @@ class Stepper extends Component {
             this.props.stepper.length > 0 
             ?
                 <div>
+                    <Steps />
                     {this.renderPage(this.props.currentStep.name)}
                     { this.props.currentStep.name !== "Completion" && this.renderNavigationButtons()}
                 </div>
