@@ -83,11 +83,4 @@ export const informationFields = [
         fullWidth: false,
         key: "Edition language",
     },
-    {
-        name: "Description",
-        value: "",
-        type: "multiline",
-        fullWidth: true,
-        key: "Description",
-    },
 ];

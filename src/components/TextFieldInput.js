@@ -45,8 +45,7 @@ export default function OutlinedTextFields({ field, handleChange }) {
         variant="outlined"
         label={name}
         fullWidth={fullWidth}
-        type={type !== "multiline" ? type : null}
-        multiline={type === "multiline" ? true : false}
+        type={type}
         onChange={e => handleChange(name, e.target.value)}
         SelectProps={
           type !== "select"
@@ -61,7 +60,6 @@ export default function OutlinedTextFields({ field, handleChange }) {
         InputLabelProps={{
           shrink: true,
         }}
-        rows={type === "multiline" ? "4" : null}
       >
         {type === "select" && renderOptions()}
       </TextField>
