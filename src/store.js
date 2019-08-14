@@ -1,6 +1,9 @@
-import thunk from "redux-thunk";
 import { createStore, applyMiddleware, compose } from "redux";
 import reducers from "./reducers";
+import createSagaMiddleware from 'redux-saga';
+import rootSaga from './sagas'
+
+
 
 function saveToLocalStorage(state) {
   try {
@@ -23,13 +26,16 @@ function loadFromLocalStorage() {
 }
 
 const persistedState = loadFromLocalStorage();
-
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
   reducers,
   persistedState,
-  composeEnhancers(applyMiddleware(thunk))
+  composeEnhancers(applyMiddleware(sagaMiddleware)) 
 );
+
+sagaMiddleware.run(rootSaga);
 
 store.subscribe(() => saveToLocalStorage(store.getState()));
 
